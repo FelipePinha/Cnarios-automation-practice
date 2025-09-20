@@ -80,4 +80,24 @@ describe('ecommerce practice test', () => {
     navigateToFirstPage()
     navigateToLastPage()
   })
+
+  it('Ensure each product card displays name, price, category, and rating', () => {
+    function verifyCardItems() {
+        cy.get('.MuiCardContent-root').each($card => {
+          cy.wrap($card).find('.font-semibold').should('exist').and('not.be.empty')
+          cy.wrap($card).find('.MuiTypography-body2').should('exist').and('not.be.empty')
+          cy.wrap($card).find('.text-green-600').should('exist').and('not.be.empty')
+          cy.wrap($card).find('.MuiRating-sizeMedium').should('exist')
+        })
+    }
+
+     cy.get('.MuiButtonBase-root').each(() => {
+       cy.get('.items-center > :nth-child(3)').then($btn => {
+         verifyCardItems()
+         if(!$btn.prop('disabled')) {
+           cy.wrap($btn).click()
+        }
+      })
+    })
+  })
 })
